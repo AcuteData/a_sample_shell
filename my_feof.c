@@ -23,6 +23,8 @@ int my_feof(FILE *stream)
 	if (fstat(fd, &file_stat) == -1)
 		return (-1);
 
+	off_t current_position;
+
 	off_t current_position = lseek(fd, 0, SEEK_CUR);
 	off_t end_position = file_stat.st_size;
 
