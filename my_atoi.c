@@ -28,7 +28,7 @@ int my_atoi(const char *str)
 		}
 		else
 		{
-			break:
+			break;
 		}
 		i++;
 	}
