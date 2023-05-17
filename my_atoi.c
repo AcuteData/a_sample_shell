@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "main.h.h"
+#include "main.h"
 
 /**
  * my_atoi - Convert a string to an integer

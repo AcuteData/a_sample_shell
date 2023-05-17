@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "main.h.h"
+#include "main.h"
 
 /**
  * my_feof - Check if the end of file has been reached
