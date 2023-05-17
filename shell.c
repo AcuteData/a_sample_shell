@@ -25,7 +25,7 @@ int main(void)
 		write(1, "#hsh$ ", 10);
 
 		/* Read a line of input from the user */
-		int n = getline(&line, 100);
+		int n = getline(line, 100);
 
 		if (n == -1)
 		{
@@ -97,4 +97,5 @@ int main(void)
 			}
 		}
 	}
+	return (0);
 }
