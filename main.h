@@ -16,14 +16,14 @@
 /* SHS.C */
 int main(void);
 
-/* MY_ATOI */
+/* MY_ATOI 
 int custom_atoi(const char *str);
 
-/* MY_STRCMP */
+ MY_STRCMP 
 int my_strcmp(const char *str1, const char *str2);
 
-/* MY_FEOF */
-int my_feof(FILE *stream);
+ MY_FEOF 
+int my_feof(FILE *stream);*/
 
 #endif
 

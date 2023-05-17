@@ -43,7 +43,7 @@ int main(void)
 		}
 
 		/* Check if command is built-in. */
-		if (my_strcmp(arguments[0], "cd") == 0)
+		if (strcmp(arguments[0], "cd") == 0)
 		{
 			/* Change directory */
 			char *directory = arguments[1];
@@ -58,7 +58,7 @@ int main(void)
 					write(1, "cd: %s: No such file or directory\n", directory);
 				}
 			}
-		} else if (my_strcmp(arguments[0], "env" == 0))
+		} else if (strcmp(arguments[0], "env" == 0))
 		{
 			/* Print the environment. */
 			char **envp = environ;
@@ -66,12 +66,12 @@ int main(void)
 			{
 				write(1, "%s=%s\n", *envp, *(envp + 1));
 				envp += 2;
-			} else if (my_strcmp(arguments[0], "exit") == 0)
+			} else if (strcmp(arguments[0], "exit") == 0)
 			{
 				/* Exit the hsh */
 				if (arguments[1] != NULL)
 				{
-					int status = my_atoi(arguments[1]);
+					int status = atoi(arguments[1]);
 					write(1, "Exiting with status: %d\n", status);
 				} else
 				{
@@ -90,7 +90,7 @@ int main(void)
 					if (fd != -1)
 					{
 						f = 1;
-						int status = execve(dir + my_strlen(command) + 1, arguments, NULL);
+						int status = execve(dir + strlen(command) + 1, arguments, NULL);
 						close(fd);
 						if (status != 0)
 						{
@@ -105,7 +105,7 @@ int main(void)
 				}
 
 				/* If the user presses Ctrl+D, exit the shell. */
-				if (my_feof(stdin))
+				if (feof(stdin))
 				{
 					break;
 				}
