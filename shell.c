@@ -25,7 +25,7 @@ int main(void)
 		write(1, "#hsh$ ", 10);
 
 		/* Read a line of input from the user */
-		int n = getline(line, 100);
+		int n = getline(&line, 100);
 
 		if (n == -1)
 		{
@@ -34,12 +34,11 @@ int main(void)
 
 		/* Parse the input line */
 		arguments = malloc(sizeof(char *));
-		int num_args = strtok(line, " ") == NULL ? 1 : strtok(NULL, " ") - line + 1;
+		int num_args = strtok(line, " ") ? 1 : strtok(NULL, " ") - line + 1;
 		arguments = realloc(arguments, sizeof(char *) * num_args);
 
-		while (arguments[i] = strtok(NULL, " "))
+		while (arguments[i++] = strtok(NULL, " "))
 		{
-			i++;
 		}
 
 		/* Check if command is built-in. */
@@ -66,55 +65,36 @@ int main(void)
 			{
 				write(1, "%s=%s\n", *envp, *(envp + 1));
 				envp += 2;
-			} else if (strcmp(arguments[0], "exit") == 0)
+			} 
+		} else if (strcmp(arguments[0], "exit") == 0)
+		{
+			/* Exit the hsh */
+			if (arguments[1] != NULL)
 			{
-				/* Exit the hsh */
-				if (arguments[1] != NULL)
-				{
-					int status = atoi(arguments[1]);
-					write(1, "Exiting with status: %d\n", status);
-				} else
-				{
-					write(1, "Exiting with status: 0\n");
-				}
-				break;
+				int status = atoi(arguments[1]);
+				write(1, "Exiting with status: %d\n", status);
 			} else
 			{
-				/* Execute the command. */
-				char *command = arguments[0];
-				char *dir;
-				for (dir = strtok(path, ":"); dir != NULL, dir = strtok(NULL, ":"))
-				{
-					int fd = open(dir, O_RDONLY);
+				write(1, "Exiting\n");
+			}
+			return (0);
+		} else
+		{
+			/* Execute the command. */
+			char *command = arguments[0];
 
-					if (fd != -1)
-					{
-						f = 1;
-						int status = execve(dir + strlen(command) + 1, arguments, NULL);
-						close(fd);
-						if (status != 0)
-						{
-							write(1, "Error executing command: %d\n", status);
-						}
-						break;
-					}
-				}
-				if (!f)
-				{
-					write(1, "Command not found: %s\n", command);
-				}
-
-				/* If the user presses Ctrl+D, exit the shell. */
-				if (feof(stdin))
+			for (dir = strtok(path, ":"); dir != NULL, dir = strtok(NULL, ":"))
+			{
+				int status = execve(dir + strlen(command) + 1, arguments, NULL);
+				if ( status == 0)
 				{
 					break;
 				}
-
-				/* Free the memory allocated for the arguments array. */
-				free(arguments);
-			return (0);
+			}
+			if (status != 0)
+			{
+				write(1, "Command not found: %s\n", command);
 			}
 		}
 	}
 }
-
